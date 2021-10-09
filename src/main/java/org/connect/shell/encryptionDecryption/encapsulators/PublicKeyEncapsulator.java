@@ -1,19 +1,27 @@
 package org.connect.shell.encryptionDecryption.encapsulators;
 
 public class PublicKeyEncapsulator {
+    private long publicSharedN;
+    private long publicSharedE;
+
+    public PublicKeyEncapsulator(long publicSharedN, long publicSharedE) {
+        this.publicSharedN = publicSharedN;
+        this.publicSharedE = publicSharedE;
+    }
+
     public long getModNumber() {
-        return 2;
+        return publicSharedN;
     }
 
     public long getPoweredPrime() {
-        return 2;
+        return publicSharedE;
     }
 
     public long encryptMessage(char h) {
-        return 2;
+        return encryptMessage((int) h);
     }
 
     public long encryptMessage(int h) {
-        return 2;
+        return Double.valueOf(Math.pow(Double.valueOf(h), Double.valueOf(getPoweredPrime()))).longValue()%getModNumber();
     }
 }
