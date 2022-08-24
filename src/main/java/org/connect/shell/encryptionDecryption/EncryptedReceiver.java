@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Stream;
 
 public class EncryptedReceiver
 {
@@ -54,10 +55,13 @@ public class EncryptedReceiver
     }
 
     public void initializePrimesFromFile(String filePath) throws IOException {
-        final List<String> lines = Files.lines(Paths.get(filePath)).toList();
-        int i = 0;
-        for(final String s: lines)
-            primeTable.put(i++, Long.parseLong(s));
+        try(Stream<String> lineStream = Files.lines(Paths.get(filePath)))
+        {
+            final List<String> lines = lineStream.toList();
+            int i = 0;
+            for(final String s: lines)
+                primeTable.put(i++, Long.parseLong(s));
+        }
 
         System.out.println(primeTable);
     }
